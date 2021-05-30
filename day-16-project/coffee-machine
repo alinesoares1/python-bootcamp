@@ -1,0 +1,63 @@
+"""Coffee machine project"""
+
+from main import MENU, resources
+
+def coffee_resources():
+    water = resources['water']
+    milk = resources['milk']
+    coffee = resources['coffee']
+
+    return f" Water: {water}ml \n Milk: {milk}ml \n Coffee: {coffee}g \n Money: ${profit}"
+
+
+def check_resources(ingredients):
+    for item in ingredients:
+        if ingredients[item] >= resources[item]:
+            print(f"Sorry, there is not enough {item}")
+            return False
+        return True
+
+def process_coins():
+    print("Please insert coins.")
+    total = int(input("How many quarters?")) * 0.25
+    total += int(input("How many pennies?")) * 0.01
+    total += int(input("How many dimes?")) * 0.1
+    total += int(input("How many nickles?")) * 0.05
+    return total
+
+def make_coffee(drink_name, drink_ingredients):
+    for item in drink_ingredients:
+        resources[item] -= drink_ingredients[item]
+    print(f"Here is your {drink_name} coffee.")
+
+
+turn_off = False
+profit = 0
+
+
+while not turn_off:
+    user_choice = input("What would you like? (espresso/latte/cappuccino): ")
+
+    if user_choice == 'off':
+        turn_off = True
+    elif user_choice == 'report':
+        report = coffee_resources()
+        print(report)
+    else:
+        drink = MENU[user_choice]
+        if check_resources(drink["ingredients"]):
+            payment = process_coins()
+            #print(payment)
+            #print(drink["cost"])
+            if payment < drink["cost"]:
+                print("Sorry, that's not enough money. Money refunded. ")
+            else:
+                profit += payment
+                change = round(payment - drink["cost"],2)
+                print(f" Here is ${change} in change.")
+                make_coffee(user_choice, drink["ingredients"])
+
+
+
+
+
