@@ -1,2 +1,2 @@
 # python bootcamp
- Repositório com os projetos do Bootcamp de Python #100daysofcode.
+ Repositório com os projetos mais interessantes do Bootcamp de Python #100daysofcode.
